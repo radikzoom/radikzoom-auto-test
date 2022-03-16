@@ -1,8 +1,14 @@
+import io.qameta.allure.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
+import static io.qameta.allure.Allure.step;
+import static io.qameta.allure.SeverityLevel.CRITICAL;
+
+@Owner("radikzoom")
+@Feature("Авторизация")
 
 public class AuthTest {
 
@@ -16,25 +22,33 @@ public class AuthTest {
     }
 
     @Test
+    @Severity(CRITICAL)
+    @Story("Логин")
     public void shouldAuthorizeTest() {
-        //1. Заполнить инпуты логина и пароля
-        TestPages.loginPage.inputLogin()
-               .sendKeys("radikzoom");
-        TestPages.loginPage.inputPassword()
-                .sendKeys("K@zan2020");
-        //2. Нажать кнопку sign in
-        TestPages.loginPage.signInButton()
-                .click();
-        //3. Проверить авторизацию
-        TestPages.profilePage.baseHeader()
-                .shouldBe(visible);
-        //4. Открываем dropdown меню
-        TestPages.profilePage.dropDownButton()
-                .click();
-        TestPages.profilePage.yourProfileButton()
-                .click();
-        //5. Проверить открытие страницы Your profile
-        TestPages.yourProfilePage.dataPjaxReplace()
-                .shouldBe(visible);
+        step("Заполнить поля авторизации и нажать кнопку авторизации", () -> {
+            TestPages.loginPage.inputLogin()
+                    .sendKeys("radikzoom");
+            TestPages.loginPage.inputPassword()
+                    .sendKeys("K@zan2020");
+            TestPages.loginPage.signInButton()
+                    .click();
+        });
+
+        step("Проверка авторизации", () -> {
+            TestPages.profilePage.baseHeader()
+                    .shouldBe(visible);
+        });
+
+        step("Переход на страницу Your profile", () -> {
+            TestPages.profilePage.dropDownButton()
+                    .click();
+            TestPages.profilePage.yourProfileButton()
+                    .click();
+        });
+
+        step("Проверка открытии страницы Your profile", () -> {
+            TestPages.yourProfilePage.dataPjaxReplace()
+                    .shouldBe(visible);
+        });
     }
 }

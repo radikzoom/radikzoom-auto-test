@@ -19,7 +19,7 @@ public class ProfilePage {
     public SelenideElement fixturesBranchesButton() {return $("[href=\"https://github.com/junit-team/junit4/tree/fixtures\"]")
             .as("кнопка выбора ветки Fixtures");}
 
-    public SelenideElement nameBranches() {return $("[id=branch-select-menu]").as("текст назавнаие ветки");}
+    public SelenideElement nameBranches() {return $("[id=branch-select-menu]").as("текст назвнаие ветки");}
 
-    public SelenideElement releasesButton() {return $("[href=\"/junit-team/junit4/releases\"]").as("кнопка Releases");}
+    public SelenideElement releasesButton() {return $("[href='/junit-team/junit4/releases']").as("кнопка Releases");}
 }
